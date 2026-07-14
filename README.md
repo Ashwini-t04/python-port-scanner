@@ -8,6 +8,7 @@ This is a Python-based TCP Port Scanner that scans a user-specified range of por
 - Count and display the total number of open ports.
 - Handle invalid hostnames and network errors gracefully.
 - Allow users to stop the scan safely using `Ctrl + C`.
+- Export scan results to CSV
 ## Technologies Used
 - Python 3
 - Socket Module
