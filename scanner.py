@@ -1,6 +1,20 @@
 import socket
 import sys
 from datetime import datetime
+services = {
+    20: "FTP Data",
+    21: "FTP",
+    22: "SSH",
+    23: "Telnet",
+    25: "SMTP",
+    53: "DNS",
+    80: "HTTP",
+    110: "POP3",
+    143: "IMAP",
+    443: "HTTPS",
+    3306: "MySQL",
+    3389: "RDP"
+}
 def scan(target, start_port, end_port):
     print("-" * 50)
     print(f"Scanning Target: {target}")
@@ -17,7 +31,8 @@ def scan(target, start_port, end_port):
             result = sock.connect_ex((target_ip, port))
             if result == 0:
                 open_ports += 1
-                print(f"[OPEN] Port {port}")
+                service = services.get(port, "Unknown Service")
+                print(f"[OPEN] Port {port} ({service})")
         print("-" * 50)
         print("Scan Completed")
         print(f"Total Open Ports: {open_ports}")
@@ -27,7 +42,7 @@ def scan(target, start_port, end_port):
         print("Couldn't connect to server.")
     except KeyboardInterrupt:
         print("\nScan cancelled by user.")
-        sys.exit()
+        sys.exit() 
 if __name__ == "__main__":
     target = input("Enter Target IP or Domain: ")
     start_port = int(input("Start Port: "))
