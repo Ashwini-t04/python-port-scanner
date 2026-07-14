@@ -1,6 +1,7 @@
 import socket
 import sys
 import csv
+import json
 from datetime import datetime
 services = {
     20: "FTP Data",
@@ -45,6 +46,9 @@ def scan(target, start_port, end_port):
             for result in scan_results:
                 writer.writerow([result["port"], result["service"]])
         print("Results saved to scan_results.csv")
+        with open("scan_results.json", "w") as file:
+            json.dump(scan_results, file, indent=4)
+        print("Results saved to scan_results.json")
     except socket.gaierror:
         print("Hostname could not be resolved.")
     except socket.error:
