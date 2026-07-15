@@ -2,6 +2,7 @@ import socket
 import sys
 import csv
 import json
+import threading
 from datetime import datetime
 services = {
     20: "FTP Data",
@@ -17,6 +18,22 @@ services = {
     3306: "MySQL",
     3389: "RDP"
 }
+lock = threading.Lock()
+def scan_port(target_ip, port, scan_results):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    socket.setdefaulttimeout(0.5)
+
+    result = sock.connect_ex((target_ip, port))
+
+    if result == 0:
+        service = services.get(port, "Unknown Service")
+        with lock:
+            scan_results.append({"port": port, "service": service})
+            print(f"[OPEN] Port {port} ({service})")
+        sock.close()
+        return True
+    sock.close()
+    return False
 def scan(target, start_port, end_port):
     print("-" * 50)
     print(f"Scanning Target: {target}")
@@ -28,15 +45,21 @@ def scan(target, start_port, end_port):
         open_ports = 0
         scan_results = []
         # Scan every port in the specified range
+        threads = []
+
         for port in range(start_port, end_port + 1):
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            socket.setdefaulttimeout(0.5)
-            result = sock.connect_ex((target_ip, port))
-            if result == 0:
-                open_ports += 1
-                service = services.get(port, "Unknown Service")
-                scan_results.append({"port": port, "service": service})
-                print(f"[OPEN] Port {port} ({service})")
+            thread = threading.Thread(
+                target=scan_port,
+                args=(target_ip, port, scan_results)
+            )
+
+            threads.append(thread)
+            thread.start()
+
+        for thread in threads:
+            thread.join()
+
+        open_ports = len(scan_results)
         print("-" * 50)
         print("Scan Completed")
         print(f"Total Open Ports: {open_ports}")
