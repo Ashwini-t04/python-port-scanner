@@ -2,7 +2,7 @@
     {
         "port": 80,
         "service": "HTTP",
-        "banner": "HTTP/1.1 200 OK\r\nDate: Wed, 15 Jul 2026 08:26:32 GMT\r\nServer: Apache/2.4.7 (Ubuntu)\r\nAccept-Ranges: bytes\r\nVary: Accept-Encoding\r\nTransfer-Encoding: chunked\r\nContent-Type: text/html\r\n\r\n4c\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<title>Go ahead and ScanMe!</title>\n\r\na7f\r\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<meta name=\"theme-color\" content=\"#2A0D45\">\n<link rel=\"preload\" as=\"image\" href=\"/images/sitelogo.png\" imagesizes=\"168px\" imagesrcset=\"/images/sitelogo.png, /images/sitelogo-2x.png 2x\">\n<link rel=\"preload\" as=\"image\" href=\"/shared/images/nst-icons.svg\">\n<link rel=\"stylesheet\" href=\"/shared/css/nst.css?v=2\">\n<script async src=\"/shared/js/nst.js?v=2\"></script>\n<link rel=\"stylesheet\" href=\"/shared/css/nst-foot.css?v=2\" media=\"print\" onload=\"this.media='all'\">\n<link rel=\"stylesheet\" href=\"/site.css\">\n<!--Google Analytics Code-->\n<link rel=\"preload\" href=\"https://www.google-analytics.com/analytics.js\" as=\"script\">\n<script>\n(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]"
+        "banner": "HTTP/1.1 200 OK\nServer: Apache/2.4.7 (Ubuntu)"
     },
     {
         "port": 22,

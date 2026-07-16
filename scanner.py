@@ -1,36 +1,12 @@
 import socket
 import sys
-import csv
-import json
 import threading
 import argparse
 from datetime import datetime
-services = {
-    20: "FTP Data",
-    21: "FTP",
-    22: "SSH",
-    23: "Telnet",
-    25: "SMTP",
-    53: "DNS",
-    80: "HTTP",
-    110: "POP3",
-    143: "IMAP",
-    443: "HTTPS",
-    3306: "MySQL",
-    3389: "RDP"
-}
+from services import services
+from banner import grab_banner
+from exporter import export_csv, export_json
 lock = threading.Lock()
-def grab_banner(sock, port):
-    try:
-        if port == 80:
-            sock.send(b"GET / HTTP/1.1\r\nHost: localhost\r\n\r\n")
-
-        banner = sock.recv(1024).decode(errors="ignore").strip()
-
-        return banner
-
-    except:
-        return "No Banner"
 def scan_port(target_ip, port, scan_results):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     socket.setdefaulttimeout(0.5)
@@ -76,15 +52,8 @@ def scan(target, start_port, end_port):
         print("-" * 50)
         print("Scan Completed")
         print(f"Total Open Ports: {open_ports}")
-        with open("scan_results.csv", "w", newline="") as file:
-            writer = csv.writer(file)
-            writer.writerow(["Port", "Service"])
-            for result in scan_results:
-                writer.writerow([result["port"], result["service"]])
-        print("Results saved to scan_results.csv")
-        with open("scan_results.json", "w") as file:
-            json.dump(scan_results, file, indent=4)
-        print("Results saved to scan_results.json")
+        export_csv(scan_results)
+        export_json(scan_results)
     except socket.gaierror:
         print("Hostname could not be resolved.")
     except socket.error:

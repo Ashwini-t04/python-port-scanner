@@ -1,3 +1,4 @@
-Port,Service
-80,HTTP
-22,SSH
+Port,Service,Banner
+80,HTTP,"HTTP/1.1 200 OK
+Server: Apache/2.4.7 (Ubuntu)"
+22,SSH,SSH-2.0-OpenSSH_6.6.1p1 Ubuntu-2ubuntu2.13
