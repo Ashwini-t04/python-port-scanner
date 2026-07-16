@@ -1,3 +1,4 @@
+from colorama import init, Fore, Style
 import socket
 import sys
 import threading
@@ -6,6 +7,7 @@ from datetime import datetime
 from services import services
 from banner import grab_banner
 from exporter import export_csv, export_json, export_report
+init(autoreset=True)
 lock = threading.Lock()
 def scan_port(target_ip, port, scan_results):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -20,20 +22,29 @@ def scan_port(target_ip, port, scan_results):
                 "service": service,
                 "banner": banner
             })
-            print(f"[OPEN] Port {port} ({service})")
+            print(
+                Fore.GREEN + Style.BRIGHT +
+                f"[OPEN] Port {port:<5} ({service})"
+            )
             if banner != "No Banner":
-                print(f"       Banner: {banner}")
+                print(
+                    Fore.WHITE +
+                    f"       Banner: {banner}"
+                )
         sock.close()
         return True
     sock.close()
     return False
 def scan(target, start_port, end_port):
     start_time = datetime.now()
+    print(Fore.CYAN + "=" * 60)
+    print(Fore.CYAN + "        PYTHON NETWORK PORT SCANNER")
+    print(Fore.CYAN + "=" * 60)
 
-    print("-" * 50)
-    print(f"Scanning Target: {target}")
-    print(f"Time Started: {start_time}")
-    print("-" * 50)
+    print(Fore.YELLOW + f"Target       : {target}")
+    print(Fore.YELLOW + f"Started      : {start_time}")
+
+    print(Fore.CYAN + "=" * 60)
     try:
         # Convert the domain name into an IP address
         target_ip = socket.gethostbyname(target)
@@ -53,11 +64,16 @@ def scan(target, start_port, end_port):
         open_ports = len(scan_results)
         end_time = datetime.now()
         duration = end_time - start_time
-        print("-" * 50)
-        print("Scan Completed")
-        print(f"Time Finished: {end_time}")
-        print(f"Duration: {duration}")
-        print(f"Total Open Ports: {open_ports}")
+        print()
+        print(Fore.CYAN + "=" * 60)
+        print(Fore.GREEN + Style.BRIGHT + "✓ Scan Completed Successfully")
+        print(Fore.CYAN + "=" * 60)
+
+        print(Fore.YELLOW + f"Finished     : {end_time}")
+        print(Fore.YELLOW + f"Duration     : {duration}")
+        print(Fore.YELLOW + f"Open Ports   : {open_ports}")
+
+        print(Fore.CYAN + "=" * 60)
         export_csv(scan_results)
         export_json(scan_results)
         export_report(

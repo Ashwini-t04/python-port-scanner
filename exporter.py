@@ -1,7 +1,7 @@
 import os
 import csv
 import json
-
+from colorama import Fore, Style
 os.makedirs("output", exist_ok=True)
 def export_csv(scan_results):
     with open("output/scan_results.csv", "w", newline="") as file:
@@ -15,14 +15,16 @@ def export_csv(scan_results):
                 result["banner"]
             ])
 
-    print("Results saved to output/scan_results.csv")
+    print(Fore.GREEN + Style.BRIGHT +
+      "✓ Results saved to output/scan_results.csv")
 
 os.makedirs("output", exist_ok=True)
 def export_json(scan_results):
     with open("output/scan_results.json", "w") as file:
         json.dump(scan_results, file, indent=4)
 
-    print("Results saved to output/scan_results.json")
+    print(Fore.GREEN + Style.BRIGHT +
+      "✓ Results saved to output/scan_results.json")
 
 def export_report(target, target_ip, start_port, end_port,
                   start_time, end_time, duration, scan_results):
@@ -65,4 +67,5 @@ def export_report(target, target_ip, start_port, end_port,
         file.write(f"Open Ports    : {len(scan_results)}\n")
         file.write(f"Closed Ports  : {total_ports - len(scan_results)}\n")
 
-    print("Results saved to output/scan_report.txt")
+    print(Fore.GREEN + Style.BRIGHT +
+      "✓ Results saved to output/scan_report.txt")
