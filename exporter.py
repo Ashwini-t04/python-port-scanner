@@ -2,7 +2,9 @@ import os
 import csv
 import json
 from colorama import Fore, Style
+
 os.makedirs("output", exist_ok=True)
+
 def export_csv(scan_results):
     with open("output/scan_results.csv", "w", newline="") as file:
         writer = csv.writer(file)

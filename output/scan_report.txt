@@ -4,10 +4,10 @@
 
 Target          : scanme.nmap.org
 Resolved IP     : 45.33.32.156
-Scan Started    : 2026-07-16 12:42:52.333273
-Scan Finished   : 2026-07-16 12:42:55.944097
-Duration        : 0:00:03.610824
-Port Range      : 1-1000
+Scan Started    : 2026-07-16 13:35:33.760641
+Scan Finished   : 2026-07-16 13:35:37.287037
+Duration        : 0:00:03.526396
+Port Range      : 1-100
 
 ------------------------------------------------------------
 OPEN PORTS
@@ -25,6 +25,6 @@ Server: Apache/2.4.7 (Ubuntu)
 ------------------------------------------------------------
 SUMMARY
 ------------------------------------------------------------
-Ports Scanned : 1000
+Ports Scanned : 100
 Open Ports    : 2
-Closed Ports  : 998
+Closed Ports  : 98

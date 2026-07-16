@@ -7,15 +7,19 @@ from datetime import datetime
 from services import services
 from banner import grab_banner
 from exporter import export_csv, export_json, export_report
+
 init(autoreset=True)
 lock = threading.Lock()
+
 def scan_port(target_ip, port, scan_results):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     socket.setdefaulttimeout(0.5)
     result = sock.connect_ex((target_ip, port))
+    
     if result == 0:
         service = services.get(port, "Unknown Service")
         banner = grab_banner(sock, port)
+
         with lock:
             scan_results.append({
                 "port": port,
@@ -35,6 +39,7 @@ def scan_port(target_ip, port, scan_results):
         return True
     sock.close()
     return False
+
 def scan(target, start_port, end_port):
     start_time = datetime.now()
     print(Fore.CYAN + "=" * 60)
@@ -50,6 +55,7 @@ def scan(target, start_port, end_port):
         target_ip = socket.gethostbyname(target)
         open_ports = 0
         scan_results = []
+
         # Scan every port in the specified range
         threads = []
         for port in range(start_port, end_port + 1):
@@ -59,11 +65,13 @@ def scan(target, start_port, end_port):
             )
             threads.append(thread)
             thread.start()
+
         for thread in threads:
             thread.join()
         open_ports = len(scan_results)
         end_time = datetime.now()
         duration = end_time - start_time
+
         print()
         print(Fore.CYAN + "=" * 60)
         print(Fore.GREEN + Style.BRIGHT + "✓ Scan Completed Successfully")
@@ -93,6 +101,7 @@ def scan(target, start_port, end_port):
     except KeyboardInterrupt:
         print("\nScan cancelled by user.")
         sys.exit() 
+
 parser = argparse.ArgumentParser(description="Python Network Port Scanner")
 
 parser.add_argument("target", help="Target IP address or domain")
