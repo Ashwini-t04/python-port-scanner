@@ -1,0 +1,30 @@
+============================================================
+        PYTHON NETWORK PORT SCANNER REPORT
+============================================================
+
+Target          : scanme.nmap.org
+Resolved IP     : 45.33.32.156
+Scan Started    : 2026-07-16 12:17:53.648066
+Scan Finished   : 2026-07-16 12:17:57.228788
+Duration        : 0:00:03.580722
+Port Range      : 20-100
+
+------------------------------------------------------------
+OPEN PORTS
+------------------------------------------------------------
+
+Port    : 80
+Service : HTTP
+Banner  : HTTP/1.1 200 OK
+Server: Apache/2.4.7 (Ubuntu)
+
+Port    : 22
+Service : SSH
+Banner  : SSH-2.0-OpenSSH_6.6.1p1 Ubuntu-2ubuntu2.13
+
+------------------------------------------------------------
+SUMMARY
+------------------------------------------------------------
+Ports Scanned : 81
+Open Ports    : 2
+Closed Ports  : 79

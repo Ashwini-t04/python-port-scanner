@@ -5,7 +5,7 @@ import argparse
 from datetime import datetime
 from services import services
 from banner import grab_banner
-from exporter import export_csv, export_json
+from exporter import export_csv, export_json, export_report
 lock = threading.Lock()
 def scan_port(target_ip, port, scan_results):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -28,9 +28,11 @@ def scan_port(target_ip, port, scan_results):
     sock.close()
     return False
 def scan(target, start_port, end_port):
+    start_time = datetime.now()
+
     print("-" * 50)
     print(f"Scanning Target: {target}")
-    print(f"Time Started: {datetime.now()}")
+    print(f"Time Started: {start_time}")
     print("-" * 50)
     try:
         # Convert the domain name into an IP address
@@ -49,11 +51,25 @@ def scan(target, start_port, end_port):
         for thread in threads:
             thread.join()
         open_ports = len(scan_results)
+        end_time = datetime.now()
+        duration = end_time - start_time
         print("-" * 50)
         print("Scan Completed")
+        print(f"Time Finished: {end_time}")
+        print(f"Duration: {duration}")
         print(f"Total Open Ports: {open_ports}")
         export_csv(scan_results)
         export_json(scan_results)
+        export_report(
+            target,
+            target_ip,
+            start_port,
+            end_port,
+            start_time,
+            end_time,
+            duration,
+            scan_results
+        )
     except socket.gaierror:
         print("Hostname could not be resolved.")
     except socket.error:
