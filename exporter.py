@@ -1,12 +1,15 @@
-import os
+from pathlib import Path
 import csv
 import json
 from colorama import Fore, Style
 
-os.makedirs("output", exist_ok=True)
+OUTPUT_DIR = Path("output")
+OUTPUT_DIR.mkdir(exist_ok=True)
 
 def export_csv(scan_results):
-    with open("output/scan_results.csv", "w", newline="") as file:
+    csv_path = OUTPUT_DIR / "scan_results.csv"
+
+    with open(csv_path, "w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
         writer.writerow(["Port", "Service", "Banner"])
 
@@ -18,26 +21,22 @@ def export_csv(scan_results):
             ])
 
     print(Fore.GREEN + Style.BRIGHT +
-      "✓ Results saved to output/scan_results.csv")
+      f"✓ Results saved to {csv_path}")
 
-os.makedirs("output", exist_ok=True)
 def export_json(scan_results):
-    with open("output/scan_results.json", "w") as file:
+    json_path = OUTPUT_DIR / "scan_results.json"
+    with open(json_path, "w", encoding="utf-8") as file:
         json.dump(scan_results, file, indent=4)
 
     print(Fore.GREEN + Style.BRIGHT +
-      "✓ Results saved to output/scan_results.json")
+          f"✓ Results saved to {json_path}")
 
 def export_report(target, target_ip, start_port, end_port,
                   start_time, end_time, duration, scan_results):
 
-    import os
+    report_path = OUTPUT_DIR / "scan_report.txt"
 
-    os.makedirs("output", exist_ok=True)
-
-    report_path = "output/scan_report.txt"
-
-    with open(report_path, "w") as file:
+    with open(report_path, "w", encoding="utf-8") as file:
 
         file.write("=" * 60 + "\n")
         file.write("        PYTHON NETWORK PORT SCANNER REPORT\n")
@@ -70,4 +69,4 @@ def export_report(target, target_ip, start_port, end_port,
         file.write(f"Closed Ports  : {total_ports - len(scan_results)}\n")
 
     print(Fore.GREEN + Style.BRIGHT +
-      "✓ Results saved to output/scan_report.txt")
+      f"✓ Results saved to {report_path}")

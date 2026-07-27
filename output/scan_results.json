@@ -1,12 +1,12 @@
 [
     {
-        "port": 22,
-        "service": "SSH",
-        "banner": "SSH-2.0-OpenSSH_6.6.1p1 Ubuntu-2ubuntu2.13"
+        "port": 135,
+        "service": "Unknown Service",
+        "banner": "No Banner"
     },
     {
-        "port": 80,
-        "service": "HTTP",
-        "banner": "HTTP/1.1 200 OK\nServer: Apache/2.4.7 (Ubuntu)"
+        "port": 445,
+        "service": "Unknown Service",
+        "banner": "No Banner"
     }
 ]
